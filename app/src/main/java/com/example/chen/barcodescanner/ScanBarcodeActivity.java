@@ -47,7 +47,9 @@ public class ScanBarcodeActivity extends Activity {
         if (requestCode == 0) {
             Log.i("onRequestPermissions", "start");
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                createCameraSource();
+
+                Intent barcodeActivity = new Intent(ScanBarcodeActivity.this, ScanBarcodeActivity.class);
+                startActivity(barcodeActivity);
             } else {
                 Toast.makeText(ScanBarcodeActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
             }
@@ -90,6 +92,7 @@ public class ScanBarcodeActivity extends Activity {
                     } else {
                         cameraSource.start(cameraPreview.getHolder());
                     }
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
