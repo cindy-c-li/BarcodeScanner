@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
-    TextView barcodeResult;
+    ListView barcodeResult;
     SurfaceView cameraView;
+    ArrayAdapter arrayAdapter;
+
 
     public static final String address = "http://api.walmartlabs.com/v1/items?apiKey=";
     public static final String walmartApikey = "kgf35974z93mq9knncwprhkc";
@@ -23,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        barcodeResult = (TextView)findViewById(R.id.barcode_result);
+        barcodeResult = (ListView) findViewById(R.id.barcode_result);
+        arrayAdapter = new ArrayAdapter<String>(barcodeResult.getContext(), android.R.layout.simple_list_item_1);
 
     }
 
@@ -37,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TextView textView = (TextView) findViewById(R.id.textView);
 
-        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(query, barcodeResult);
+        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(query, barcodeResult, arrayAdapter);
         retrieveFeedTask.execute();
 
 
@@ -60,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     checkPrice(barcode.displayValue);
 
                 }else {
-                    barcodeResult.setText("No barcode found");
+                    ArrayList<String> list = new ArrayList<String>();
+                    list.add("No barcode found");
+                    arrayAdapter.clear();
+                    arrayAdapter.addAll(list);
                 }
             }
         }else {

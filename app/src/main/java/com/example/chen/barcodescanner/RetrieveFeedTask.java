@@ -7,7 +7,8 @@ package com.example.chen.barcodescanner;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,22 +19,30 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
     private String query;
-    private TextView textView;
+    private ListView listView;
+    private ArrayAdapter<String> listAdapter;
 
     private JSONObject item;
+
+    private List<String> items;
 
     public JSONObject getItem() {
         return item;
     }
 
 
-    public RetrieveFeedTask(String query, TextView textView) {
+    public RetrieveFeedTask(String query, ListView listView, ArrayAdapter arrayAdapter) {
         this.query = query;
-        this.textView = textView;
+        this.listView = listView;
+        this.listAdapter = arrayAdapter;
+        this.listView.setAdapter(listAdapter);
+        this.items = new ArrayList<String>();
     }
 
 
@@ -67,7 +76,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         if (s != null) {
-            //textView.setText(s);
+            //listView.setText(s);
 
             try {
                 JSONObject object = (JSONObject) new JSONTokener(s).nextValue();
@@ -76,18 +85,23 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
 
                 int requestID = item.getInt("itemId");
-                String likelihood = item.getString("name");
+                String name = item.getString("name");
                 String price = item.getString("salePrice");
 
-                textView.setText(requestID + " " + likelihood + " " + price);
+                StringBuilder item = new StringBuilder(requestID);
+                item.append(" ").append(name).append(" ").append(price);
 
+                this.items.add(item.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
 
             } catch (Exception e) {
-                textView.setText("No item with this UPC found in Walmart");
+                this.items.add("No item with this UPC found in Walmart");
             }
+
+            listAdapter.clear();
+            listAdapter.addAll(this.items);
         }
 
 

@@ -2,4 +2,5 @@
     <string name="app_name">BarcodeScanner</string>
     <string name="action_settings">Settings</string>
     <string name="result">Nothing to read.</string>
+    <string name="scan_barcode">Scan Barcode</string>
 </resources>
