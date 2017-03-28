@@ -77,6 +77,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String s) {
         if (s != null) {
             //listView.setText(s);
+            //test
 
             try {
                 JSONObject object = (JSONObject) new JSONTokener(s).nextValue();
