@@ -5,9 +5,12 @@ package com.example.chen.barcodescanner;
  */
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -27,6 +30,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
     private String query;
     private ListView listView;
     private ArrayAdapter<String> listAdapter;
+    private Button walmartBuy;
 
     private JSONObject item;
 
@@ -37,12 +41,13 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
     }
 
 
-    public RetrieveFeedTask(String query, ListView listView, ArrayAdapter arrayAdapter) {
+    public RetrieveFeedTask(String query, ListView listView, ArrayAdapter arrayAdapter, Button walmartBuy) {
         this.query = query;
         this.listView = listView;
         this.listAdapter = arrayAdapter;
         this.listView.setAdapter(listAdapter);
         this.items = new ArrayList<String>();
+        this.walmartBuy = walmartBuy;
     }
 
 
@@ -70,14 +75,11 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
             return e.toString();
         }
 
-        //return null;
     }
 
     @Override
     protected void onPostExecute(String s) {
         if (s != null) {
-            //listView.setText(s);
-            //test
 
             try {
                 JSONObject object = (JSONObject) new JSONTokener(s).nextValue();
@@ -88,9 +90,13 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
                 int requestID = item.getInt("itemId");
                 String name = item.getString("name");
                 String price = item.getString("salePrice");
-
-                StringBuilder item = new StringBuilder(requestID);
+                String addToCartUrl = item.getString("addToCartUrl");
+                listView.setTag(addToCartUrl);
+                StringBuilder item = new StringBuilder(requestID+"");
                 item.append(" ").append(name).append(" ").append(price);
+
+                //make buy now button visiable
+                walmartBuy.setVisibility(View.VISIBLE);
 
                 this.items.add(item.toString());
 
@@ -103,6 +109,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
             listAdapter.clear();
             listAdapter.addAll(this.items);
+
         }
 
 
