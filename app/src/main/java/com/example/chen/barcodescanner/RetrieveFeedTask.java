@@ -97,6 +97,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
                 //make buy now button visiable
                 walmartBuy.setVisibility(View.VISIBLE);
+                walmartBuy.setEnabled(true);
 
                 this.items.add(item.toString());
 
