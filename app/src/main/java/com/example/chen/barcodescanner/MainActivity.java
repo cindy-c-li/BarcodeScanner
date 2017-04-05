@@ -2,41 +2,35 @@ package com.example.chen.barcodescanner;
 //
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
-
-import java.util.ArrayList;
-
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView barcodeResult;
-    SurfaceView cameraView;
-    ArrayAdapter arrayAdapter;
-    Button buyButton;
-
-
     public static final String address = "http://api.walmartlabs.com/v1/items?apiKey=";
     public static final String walmartApikey = "kgf35974z93mq9knncwprhkc";
+    ListView barcodeResult;
+    SurfaceView cameraView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         barcodeResult = (ListView) findViewById(R.id.barcode_result);
-        arrayAdapter = new ArrayAdapter<String>(barcodeResult.getContext(), android.R.layout.simple_list_item_1);
-        buyButton = (Button)findViewById(R.id.walmart_buy);
+        DisplayImageOptions defaultoptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
+
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultoptions).build();
+        ImageLoader.getInstance().init(config);
     }
 
     public void checkPrice(String barcodeValue) {
@@ -48,26 +42,14 @@ public class MainActivity extends AppCompatActivity {
 
         //TextView textView = (TextView) findViewById(R.id.textView);
 
-        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(query, barcodeResult, arrayAdapter, buyButton);
+        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(getApplicationContext(), query, barcodeResult);
         retrieveFeedTask.execute();
 
 
     }
-
-
-
     public void scanBarcode(View view) {
         Intent intent = new Intent(this, ScanBarcodeActivity.class);
         startActivityForResult(intent, 0);
-    }
-
-    public void placeOrder(View view){
-        buyButton.setEnabled(false);
-        String url = (String)barcodeResult.getTag();
-        Log.d("place order", url);
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
-        startActivity(i);
     }
 
     @Override
@@ -79,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     //barcodeResult.setText("Barcode value: " + barcode.displayValue);
                     checkPrice(barcode.displayValue);
 
-                }else {
-                    ArrayList<String> list = new ArrayList<String>();
-                    list.add("No barcode found");
-                    arrayAdapter.clear();
-                    arrayAdapter.addAll(list);
                 }
             }
         }else {

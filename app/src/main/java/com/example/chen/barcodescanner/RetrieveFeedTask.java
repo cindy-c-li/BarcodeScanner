@@ -5,18 +5,17 @@ package com.example.chen.barcodescanner;
  */
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.example.chen.barcodescanner.model.Model;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -25,34 +24,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+public class RetrieveFeedTask extends AsyncTask<Void, Void, List<Model>> {
 
     private String query;
     private ListView listView;
-    private ArrayAdapter<String> listAdapter;
-    private Button walmartBuy;
+    private Context context;
 
-    private JSONObject item;
+    private ItemListAdapter listAdapter;
 
-    private List<String> items;
+    private ImageView imageView;
 
-    public JSONObject getItem() {
-        return item;
-    }
-
-
-    public RetrieveFeedTask(String query, ListView listView, ArrayAdapter arrayAdapter, Button walmartBuy) {
+    public RetrieveFeedTask(Context context, String query, ListView listView) {
         this.query = query;
         this.listView = listView;
-        this.listAdapter = arrayAdapter;
-        this.listView.setAdapter(listAdapter);
-        this.items = new ArrayList<String>();
-        this.walmartBuy = walmartBuy;
+        this.context = context;
     }
 
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected List<Model> doInBackground(Void... params) {
+        ArrayList<Model> items = new ArrayList<>();
         try {
             URL url = new URL(query);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -68,51 +59,37 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
             bufferedReader.close();
 
             Log.d("RetrieveFeedTask", stringBuilder.toString());
-            return stringBuilder.toString();
+
+            String x = stringBuilder.toString();
+            JSONObject object = new JSONObject(x);//.nextValue();
+
+            JSONArray itemsJSON = object.getJSONArray("items");
+            JSONObject item = itemsJSON.getJSONObject(0);
+
+            Model m = new Model();
+
+            m.setItemPurchaseURL(item.getString("addToCartUrl"));
+            m.setItemId(item.getInt("itemId"));
+            m.setName(item.getString("name"));
+            m.setSalePrice(item.getString("salePrice"));
+            m.setThumbnailImage(item.getString("thumbnailImage"));
+
+            items.add(m);
+        } catch (JSONException e) {
+            e.printStackTrace();
 
         } catch (Exception e) {
-            Log.d("RetrieveFeedTask", e.toString());
-            return e.toString();
-        }
+            e.printStackTrace();
 
+        }
+        return items;
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        if (s != null) {
-
-            try {
-                JSONObject object = (JSONObject) new JSONTokener(s).nextValue();
-                JSONArray items = object.getJSONArray("items");
-                this.item = items.getJSONObject(0);
-
-
-                int requestID = item.getInt("itemId");
-                String name = item.getString("name");
-                String price = item.getString("salePrice");
-                String addToCartUrl = item.getString("addToCartUrl");
-                listView.setTag(addToCartUrl);
-                StringBuilder item = new StringBuilder(requestID+"");
-                item.append(" ").append(name).append(" ").append(price);
-
-                //make buy now button visiable
-                walmartBuy.setVisibility(View.VISIBLE);
-                walmartBuy.setEnabled(true);
-
-                this.items.add(item.toString());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-
-            } catch (Exception e) {
-                this.items.add("No item with this UPC found in Walmart");
-            }
-
-            listAdapter.clear();
-            listAdapter.addAll(this.items);
-
-        }
-
+    protected void onPostExecute(List<Model> models) {
+        super.onPostExecute(models);
+        ItemListAdapter adapter = new ItemListAdapter(context, R.layout.row, models);
+        listView.setAdapter(adapter);
 
     }
 }
