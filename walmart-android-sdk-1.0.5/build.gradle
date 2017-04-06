@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('walmart-android-sdk-1.0.5.aar'))
