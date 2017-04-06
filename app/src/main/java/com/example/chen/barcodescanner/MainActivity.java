@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
         //String inputBarcode = barcode.getText().toString();
         //"035000521019"
 
-        final String query = String.format("%s%s&upc=%s", address, walmartApikey, barcodeValue);
+        //final String query = String.format("%s%s&upc=%s", address, walmartApikey, barcodeValue);
 
         //TextView textView = (TextView) findViewById(R.id.textView);
 
-        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(getApplicationContext(), query, barcodeResult);
+        RetrieveFeedTask retrieveFeedTask = new RetrieveFeedTask(getApplicationContext(), barcodeValue, barcodeResult);
         retrieveFeedTask.execute();
 
 

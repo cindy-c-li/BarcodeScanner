@@ -1,16 +1,28 @@
-package com.example.chen.barcodescanner.model;
+package com.example.webservice;
 
 /**
  * Created by Aditya on 3/28/2017.
+ *
+ * Updated to include the service type and itemupc
  */
 
 public class Model {
 
-    private int itemId;
+    private String itemId;
+    private String itemUPC;
     private String name;
     private String salePrice;
     private String thumbnailImage;
     private String itemPurchaseURL;
+    private ServiceType type;
+
+    public ServiceType getType() {
+        return type;
+    }
+
+    public void setType(ServiceType type) {
+        this.type = type;
+    }
 
     public String getItemPurchaseURL() {
         return itemPurchaseURL;
@@ -44,11 +56,24 @@ public class Model {
         this.name = name;
     }
 
-    public int getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public String getItemUPC() {
+        return itemUPC;
+    }
+
+    public void setItemUPC(String itemUPC) {
+        this.itemUPC = itemUPC;
+    }
+
+    @Override
+    public String toString() {
+        return "\nTitle: " + name + "\nPrice: " + salePrice + "\nUPC " + itemUPC + "\nThumbnail: " + thumbnailImage + "\nVendor ID: " + itemId;
     }
 }

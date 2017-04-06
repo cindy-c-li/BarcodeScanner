@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.chen.barcodescanner.model.Model;
+import com.example.webservice.Model;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -28,24 +28,15 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class ItemListAdapter extends ArrayAdapter<Model> {
 
-    private List<Model> objectsModelList;
     private int resource;
     private LayoutInflater inflater;
 
     public ItemListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Model> objects) {
         super(context, resource, objects);
-
-        objectsModelList = objects;
         this.resource = resource;
         inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
     }
 
-
-    public ItemListAdapter(@NonNull Context context, @LayoutRes int resource) {
-        super(context, resource);
-        this.resource = resource;
-        inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-    }
 
     @NonNull
     @Override
@@ -59,16 +50,13 @@ public class ItemListAdapter extends ArrayAdapter<Model> {
         TextView Pid = (TextView) convertView.findViewById(R.id.Pid);
         TextView Pprice = (TextView) convertView.findViewById(R.id.Pprice);
         Button addToCart = (Button) convertView.findViewById(R.id.Paddtocart);
-
-        if (objectsModelList != null && !objectsModelList.isEmpty()) {
-            Pname.setText(objectsModelList.get(position).getName());
-            Pid.setText("" + objectsModelList.get(position).getItemId());
-            Pprice.setText(objectsModelList.get(position).getSalePrice());
-            ImageLoader.getInstance().displayImage(objectsModelList.get(position).getThumbnailImage(), Pimage);
-            addToCart.setTag(objectsModelList.get(position).getItemPurchaseURL());
-            addToCart.setVisibility(View.VISIBLE);
-            addToCart.setEnabled(true);
-        }
+        Pname.setText(getItem(position).getName());
+        Pid.setText(getItem(position).getItemUPC());
+        Pprice.setText(getItem(position).getSalePrice());
+        ImageLoader.getInstance().displayImage(getItem(position).getThumbnailImage(), Pimage);
+        addToCart.setTag(getItem(position).getItemPurchaseURL());
+        addToCart.setVisibility(View.VISIBLE);
+        addToCart.setEnabled(true);
 
         addToCart.setOnClickListener(new View.OnClickListener() {
 
@@ -78,6 +66,7 @@ public class ItemListAdapter extends ArrayAdapter<Model> {
                                              String url = (String) v.getTag();
                                              Log.d("place order", url);
                                              Intent i = new Intent(Intent.ACTION_VIEW);
+                                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                              i.setData(Uri.parse(url));
                                              v.getContext().startActivity(i);
                                          }
