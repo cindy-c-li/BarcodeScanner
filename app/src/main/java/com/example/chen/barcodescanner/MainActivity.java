@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ListView;
 
+import com.example.webservice.RetrieveFeedTask;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

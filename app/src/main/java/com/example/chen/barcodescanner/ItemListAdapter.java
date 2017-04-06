@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.webservice.AmazonPurchaseUtility;
 import com.example.webservice.Model;
+import com.example.webservice.ServiceType;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -54,7 +56,7 @@ public class ItemListAdapter extends ArrayAdapter<Model> {
         Pid.setText(getItem(position).getItemUPC());
         Pprice.setText(getItem(position).getSalePrice());
         ImageLoader.getInstance().displayImage(getItem(position).getThumbnailImage(), Pimage);
-        addToCart.setTag(getItem(position).getItemPurchaseURL());
+        addToCart.setTag(getItem(position));
         addToCart.setVisibility(View.VISIBLE);
         addToCart.setEnabled(true);
 
@@ -63,12 +65,19 @@ public class ItemListAdapter extends ArrayAdapter<Model> {
                                          @Override
                                          public void onClick(View v) {
                                              v.setEnabled(false);
-                                             String url = (String) v.getTag();
-                                             Log.d("place order", url);
-                                             Intent i = new Intent(Intent.ACTION_VIEW);
-                                             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                             i.setData(Uri.parse(url));
-                                             v.getContext().startActivity(i);
+                                             Model item = (Model) v.getTag();
+                                             if (item.getType() == ServiceType.AMAZON) {
+                                                 AmazonPurchaseUtility amazonService = new AmazonPurchaseUtility();
+                                                 amazonService.setEnvironement(item, v);
+                                                 amazonService.execute();
+                                             } else {
+                                                 String url = item.getItemPurchaseURL();
+                                                 Log.d("place order", url);
+                                                 Intent i = new Intent(Intent.ACTION_VIEW);
+                                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                 i.setData(Uri.parse(url));
+                                                 v.getContext().startActivity(i);
+                                             }
                                          }
                                      }
 

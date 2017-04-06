@@ -1,4 +1,4 @@
-package com.example.chen.barcodescanner;
+package com.example.webservice;
 
 /**
  * Created by chen on 2/7/2017.
@@ -10,8 +10,8 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.webservice.Model;
-import com.example.webservice.RequestDispatcher;
+import com.example.chen.barcodescanner.ItemListAdapter;
+import com.example.chen.barcodescanner.R;
 
 import java.util.List;
 
