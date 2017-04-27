@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     android:weightSum="1">
 
 
@@ -10,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+
         <ImageView
             android:id="@+id/Pimage"
-            android:layout_width="142dp"
-            android:layout_height="187dp"
+            android:layout_width="100dp"
+            android:layout_height="134dp"
             app:srcCompat="@drawable/common_full_open_on_phone" />
     </FrameLayout>
 
@@ -21,7 +24,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="5dp"
         android:weightSum="1">
+
+        <TextView
+            android:id="@+id/Ptype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03"
+            android:text="Type"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/Pname"
@@ -30,7 +42,8 @@
             android:layout_weight="0.03"
             android:ems="30"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:text="Name"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/Pid"
@@ -39,7 +52,8 @@
             android:layout_weight="0.03"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Id" />
+            android:text="Id"
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/Pprice"
@@ -48,13 +62,27 @@
             android:layout_weight="0.03"
             android:ems="20"
             android:inputType="textPersonName"
-            android:text="Price" />
+            android:text="Price"
+            android:textColor="@color/colorPrimaryDark" />
 
-        <Button
-            android:id="@+id/Paddtocart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add To Cart" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/Psave"
+                android:layout_width="wrap_content"
+                android:layout_height="59dp"
+                android:text="Save For Later" />
+
+            <Button
+                android:id="@+id/Paddtocart"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:text="Buy Now" />
+        </LinearLayout>
 
     </LinearLayout>
 

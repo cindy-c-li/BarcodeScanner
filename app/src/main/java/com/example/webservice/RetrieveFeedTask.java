@@ -22,6 +22,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, List<Model>> {
     private Context context;
 
     private ItemListAdapter listAdapter;
+//    private cart cart;
 
     private ImageView imageView;
 
@@ -43,8 +44,10 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, List<Model>> {
     @Override
     protected void onPostExecute(List<Model> models) {
         super.onPostExecute(models);
-        ItemListAdapter adapter = new ItemListAdapter(context, R.layout.row, models);
-        listView.setAdapter(adapter);
+        ItemListAdapter adapter1 = new ItemListAdapter(context, R.layout.row, models);
+
+        listView.setAdapter(adapter1);
+
 
     }
 }

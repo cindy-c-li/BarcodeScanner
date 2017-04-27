@@ -21,14 +21,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String walmartApikey = "kgf35974z93mq9knncwprhkc";
     ListView barcodeResult;
     SurfaceView cameraView;
+    //DatabaseHandler mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         barcodeResult = (ListView) findViewById(R.id.barcode_result);
         DisplayImageOptions defaultoptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
-
+        // mydb = new DatabaseHandler(this);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultoptions).build();
         ImageLoader.getInstance().init(config);
@@ -53,6 +55,17 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
+    public void AmazonBag(View view) {
+        Intent intent = new Intent(this, AmazonBag.class);
+        startActivity(intent);
+    }
+
+    public void WalmartBag(View view) {
+        Intent intent = new Intent(this, WalmartBag.class);
+        startActivity(intent);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
@@ -68,4 +81,13 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+/*
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+     //   android.app.FragmentManager fragmentManager = new android.app.FragmentManager() {
+
+        return false;
+    }
+    */
 }

@@ -16,6 +16,20 @@ public class Model {
     private String itemPurchaseURL;
     private ServiceType type;
 
+    public Model(String itemId, String itemUPC, String name, String salePrice, String thumbnailImage, String itemPurchaseURL, ServiceType type) {
+        this.itemId = itemId;
+        this.itemUPC = itemUPC;
+        this.name = name;
+        this.salePrice = salePrice;
+        this.thumbnailImage = thumbnailImage;
+        this.itemPurchaseURL = itemPurchaseURL;
+        this.type = type;
+    }
+
+    public Model() {
+
+    }
+
     public ServiceType getType() {
         return type;
     }
@@ -76,4 +90,5 @@ public class Model {
     public String toString() {
         return "\nTitle: " + name + "\nPrice: " + salePrice + "\nUPC " + itemUPC + "\nThumbnail: " + thumbnailImage + "\nVendor ID: " + itemId;
     }
+
 }
