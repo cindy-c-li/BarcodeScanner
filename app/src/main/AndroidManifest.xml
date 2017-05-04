@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="@string/app_name"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -21,9 +21,14 @@
             android:value="@integer/google_play_services_version"/>
 
         <activity
-            android:name="MainActivity"
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Custom1" />
+
+        <activity
+            android:name=".SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.Custom1">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,16 +37,17 @@
         </activity>
 
         <activity
-            android:name="ScanBarcodeActivity"
+            android:name=".ScanBarcodeActivity"
+            android:theme="@style/AppTheme.Custom1"
             android:label="Scan Barcode" />
 
         <activity
-            android:name="AmazonBag"
-            android:label="Walmart Bag" />
+            android:name=".AmazonBag"
+            android:theme="@style/AppTheme.Custom1" />
 
         <activity
-            android:name="WalmartBag"
-            android:label="Amazon Bag" />
+            android:name=".WalmartBag"
+            android:theme="@style/AppTheme.Custom1" />
 
     </application>
 

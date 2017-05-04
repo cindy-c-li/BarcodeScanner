@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="5dp"
     android:weightSum="1">
 
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <ImageView
             android:id="@+id/Pimage"
             android:layout_width="100dp"
-            android:layout_height="134dp"
+            android:layout_height="match_parent"
             app:srcCompat="@drawable/common_full_open_on_phone" />
     </FrameLayout>
 
@@ -31,7 +31,6 @@
             android:id="@+id/Ptype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.03"
             android:text="Type"
             android:textColor="@color/colorPrimaryDark" />
 
@@ -39,9 +38,9 @@
             android:id="@+id/Pname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.03"
+            android:maxLines="10"
             android:ems="30"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
             android:text="Name"
             android:textColor="@color/colorPrimaryDark" />
 
@@ -49,7 +48,6 @@
             android:id="@+id/Pid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.03"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="Id"
@@ -59,7 +57,6 @@
             android:id="@+id/Pprice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.03"
             android:ems="20"
             android:inputType="textPersonName"
             android:text="Price"
@@ -67,20 +64,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/Psave"
-                android:layout_width="wrap_content"
-                android:layout_height="59dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:text="Save For Later" />
 
             <Button
                 android:id="@+id/Paddtocart"
-                android:layout_width="match_parent"
-                android:layout_height="59dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
                 android:text="Buy Now" />
         </LinearLayout>
 

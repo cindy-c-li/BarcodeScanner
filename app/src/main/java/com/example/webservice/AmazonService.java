@@ -69,6 +69,7 @@ public class AmazonService extends Service {
                 response.setItemUPC(getUpc());
                 response.setSalePrice(price);
                 response.setName(title);
+                System.out.println("title>>>>>>" + title);
                 response.setItemId(itemId);
                 response.setType(ServiceType.AMAZON);
                 Log.d("SignedRequestsHelper", response.toString());

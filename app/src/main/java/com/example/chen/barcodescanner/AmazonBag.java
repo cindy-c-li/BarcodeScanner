@@ -1,8 +1,8 @@
 package com.example.chen.barcodescanner;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.example.webservice.ServiceType;
@@ -11,7 +11,7 @@ import com.example.webservice.ServiceType;
  * Created by Adi on 4/14/2017.
  */
 
-public class AmazonBag extends Activity {
+public class AmazonBag extends AppCompatActivity {
     ListView savedAmazonItems;
 
     @Override

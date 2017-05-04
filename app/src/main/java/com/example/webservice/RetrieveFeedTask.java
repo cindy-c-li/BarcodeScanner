@@ -7,6 +7,7 @@ package com.example.webservice;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -47,7 +48,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, List<Model>> {
         ItemListAdapter adapter1 = new ItemListAdapter(context, R.layout.row, models);
 
         listView.setAdapter(adapter1);
-
+        listView.setVisibility(View.VISIBLE);
 
     }
 }

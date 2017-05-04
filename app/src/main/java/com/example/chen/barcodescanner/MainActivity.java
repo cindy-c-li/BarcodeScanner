@@ -4,6 +4,7 @@ package com.example.chen.barcodescanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ListView;
@@ -21,19 +22,24 @@ public class MainActivity extends AppCompatActivity {
     public static final String walmartApikey = "kgf35974z93mq9knncwprhkc";
     ListView barcodeResult;
     SurfaceView cameraView;
+
     //DatabaseHandler mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //setContentView(R.layout.page_1);
+
         setContentView(R.layout.activity_main);
+
         barcodeResult = (ListView) findViewById(R.id.barcode_result);
         DisplayImageOptions defaultoptions = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
         // mydb = new DatabaseHandler(this);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(defaultoptions).build();
         ImageLoader.getInstance().init(config);
+
     }
 
     public void checkPrice(String barcodeValue) {
@@ -51,12 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void scanBarcode(View view) {
+        Log.d("scan barcode:", "start");
         Intent intent = new Intent(this, ScanBarcodeActivity.class);
         startActivityForResult(intent, 0);
     }
 
     public void AmazonBag(View view) {
-        Intent intent = new Intent(this, AmazonBag.class);
+        Intent intent = new Intent(MainActivity.this, AmazonBag.class);
         startActivity(intent);
     }
 
