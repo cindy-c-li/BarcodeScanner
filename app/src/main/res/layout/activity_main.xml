@@ -67,6 +67,12 @@
             android:background="@color/common_google_signin_btn_text_dark_default"
             android:visibility="gone" />
 
+        <!--
+            the image used in @+id/imageView8 is from online resource.
+            The website is http://www.freepik.com/free-vector/red-shopping-bag-and-big-heart-made-of-fashion-complements_714485.htm
+            The image is Created by Freepik.
+        -->
+
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="match_parent"
