@@ -13,4 +13,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="buy_all">Buy All</string>
+    <string name="amazon_shopping_bag">Amazon Shopping Bag</string>
 </resources>

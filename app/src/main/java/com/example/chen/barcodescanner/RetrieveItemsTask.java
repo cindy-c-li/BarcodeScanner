@@ -55,8 +55,5 @@ public class RetrieveItemsTask extends AsyncTask<Void, Void, List<Model>> {
 
     }
 
-    /*public void Back(View view, Context context) {
-        Intent intent = new Intent(context, AmazonBag.class);
-    // startActivityForResult(Home.this, 0);
-    }*/
+
 }

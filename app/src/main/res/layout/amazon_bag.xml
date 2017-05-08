@@ -15,6 +15,7 @@
             android:id="@+id/imageView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/amazon_shopping_bag"
             app:srcCompat="@drawable/logo_img_amazon" />
 
     </LinearLayout>
@@ -22,7 +23,17 @@
     <ListView
         android:id="@+id/savedAmazonItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="317dp"
+        android:layout_weight="4.76" />
+
+    <Button
+        android:id="@+id/buyAllButton"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:onClick="buyAll"
+        android:text="@string/buy_all"
+        android:visibility="visible" />
 
 
 </LinearLayout>

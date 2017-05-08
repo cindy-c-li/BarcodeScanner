@@ -12,20 +12,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Anu on 12-04-2017.
+ * Created by Anand Rawat on 12-04-2017.
  */
 
 public class AmazonPurchaseUtility extends AsyncTask<Void, Void, Model> {
 
     private Model itemToBuy;
     private View view;
+    private boolean buyAll = false;
+    private List<Model> itemsToBuy;
 
     public void setEnvironement(Model itemToBuy, View view) {
         this.itemToBuy = itemToBuy;
         this.view = view;
+    }
+
+    public void setEnvironment(List<Model> itemsToBuy, View view) {
+        this.itemsToBuy = itemsToBuy;
+        this.view = view;
+        buyAll = true;
     }
 
     @Override
@@ -34,8 +43,15 @@ public class AmazonPurchaseUtility extends AsyncTask<Void, Void, Model> {
         Map<String, String> params = new HashMap<>();
         params.put("AssociateTag", "thrifts0c-20");
         params.put("Operation", "CartCreate");
-        params.put("Item.1.ASIN", itemToBuy.getItemId());
-        params.put("Item.1.Quantity", "1");
+        if (!buyAll) {
+            params.put("Item.1.ASIN", itemToBuy.getItemId());
+            params.put("Item.1.Quantity", "1");
+        } else {
+            for (int index = 0; index < itemsToBuy.size(); index++) {
+                params.put("Item." + index + 1 + ".ASIN", itemsToBuy.get(index).getItemId());
+                params.put("Item." + index + 1 + ".Quantity", "1");
+            }
+        }
         JSONObject object = SignedRequestsHelper.sendRequest(params);
         if (object != null) {
             Log.d("AmazonService", object.toString());
@@ -43,6 +59,8 @@ public class AmazonPurchaseUtility extends AsyncTask<Void, Void, Model> {
                 JSONObject cartCreate = object.getJSONObject("CartCreateResponse");
                 JSONObject cart = cartCreate.getJSONObject("Cart");
                 String purchaseURL = cart.getString("PurchaseURL");
+                if (buyAll)
+                    itemToBuy = new Model();
                 itemToBuy.setItemPurchaseURL(purchaseURL);
                 response = itemToBuy;
             } catch (JSONException e) {
