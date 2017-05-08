@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.chen.barcodescanner.ItemListAdapter;
 import com.example.chen.barcodescanner.R;
@@ -45,10 +46,14 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, List<Model>> {
     @Override
     protected void onPostExecute(List<Model> models) {
         super.onPostExecute(models);
-        ItemListAdapter adapter1 = new ItemListAdapter(context, R.layout.row, models);
+        if (models == null || models.isEmpty()) {
+            Toast.makeText(listView.getContext(), "No items found at the vendors with this UPC", Toast.LENGTH_LONG).show();
+        } else {
+            ItemListAdapter adapter1 = new ItemListAdapter(context, R.layout.row, models);
 
-        listView.setAdapter(adapter1);
-        listView.setVisibility(View.VISIBLE);
+            listView.setAdapter(adapter1);
+            listView.setVisibility(View.VISIBLE);
+        }
 
     }
 }

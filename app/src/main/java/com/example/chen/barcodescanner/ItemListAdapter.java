@@ -78,7 +78,7 @@ public class ItemListAdapter extends ArrayAdapter<Model> {
 
                                          @Override
                                          public void onClick(View v) {
-                                             v.setEnabled(false);
+                                             //v.setEnabled(false);
                                              Model item = (Model) v.getTag();
                                              if (item.getType() == ServiceType.AMAZON) {
                                                  AmazonPurchaseUtility amazonService = new AmazonPurchaseUtility();
